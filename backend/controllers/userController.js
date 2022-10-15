@@ -4,8 +4,19 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
-// register user / create new user ----------------------------
-const registerUser = asyncHandler(async (req, res) => {
+// get all users ----------------------------
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select('-password').lean()
+  
+  if (!users?.length) {
+    return res.status(400).json({ message: 'No users found' })
+  }
+  
+  res.json(users)
+})
+
+// create new user ----------------------------
+const createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
 
   if (!name || !email || !password) {
@@ -79,7 +90,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-  registerUser,
+  getAllUsers,
+  createUser,
   loginUser,
   deleteUser
 }

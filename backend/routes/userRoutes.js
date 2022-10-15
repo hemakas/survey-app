@@ -4,7 +4,8 @@ const userController =  require('../controllers/userController')
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/')
-  .post(userController.registerUser)
+  .get(userController.getAllUsers)
+  .post(userController.createUser)
 
 router.route('/login')
   .post(userController.loginUser)
