@@ -18,10 +18,11 @@ connectDB()
 const app = express()
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
 
 // routes ==========================
-app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/surveyees', require('./routes/surveyeeRoutes'))
 
 // deployments ==========================
 if (process.env.NODE_ENV === 'production') {
