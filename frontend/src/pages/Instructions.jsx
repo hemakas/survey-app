@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Instructions = () => {
+function Instructions() {
   return (
     <div>Instructions</div>
   )

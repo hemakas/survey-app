@@ -1,8 +1,30 @@
 import React from 'react'
+import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
+import LoginForm from '../components/LoginForm'
 
 function Login() {
   return (
-    <div>Login</div>
+    <>
+      <Alert variant="success">
+        <Alert.Heading>Login</Alert.Heading>
+      </Alert>
+
+      <Container className='mb-3'>
+        <Row>
+          <Col></Col> 
+          
+          <Col xs={6}>
+            <Card>
+              <Card.Body>
+                <LoginForm />
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col></Col> 
+        </Row>
+      </Container>      
+    </>
   )
 }
 

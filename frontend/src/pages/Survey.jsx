@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Survey = () => {
+function Survey() {
   return (
     <div>Survey</div>
   )

@@ -1,6 +1,6 @@
 import { FaLock, FaReply, FaUserPlus, FaInfo, FaHourglassHalf, FaSignOutAlt } from 'react-icons/fa'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap';
- 
+
 export const Header = () => {
     const onLogout = () => {
 
