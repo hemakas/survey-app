@@ -1,8 +1,13 @@
 import React from 'react'
+import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
+import Redirect from '../components/Redirect'
 
 function Responses() {
   return (
-    <div>Responses</div>
+    <div>
+      <Redirect />
+      Responses
+    </div>
   )
 }
 

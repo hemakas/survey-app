@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {Form, Button, Row} from 'react-bootstrap'
 import { login, reset } from '../features/auth/authSlice'
+import ReactSpinner from './ReactSpinner'
 
 function LoginForm() {
     const navigate = useNavigate()
@@ -57,7 +58,7 @@ function LoginForm() {
 
     // show spinner while loading
     if (isLoading) {
-
+        <ReactSpinner />
     }
 
     return (
