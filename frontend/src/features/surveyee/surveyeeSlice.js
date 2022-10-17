@@ -10,6 +10,22 @@ const initialState = {
   message: '',
 }
 
+// get all surveyees
+export const getSurveyees = createAsyncThunk('surveyees/getAll', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token
+    return await surveyeeService.getSurveyees(token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 // create new surveyee
 export const createSurveyee = createAsyncThunk('surveyees/create', async (surveyeeData, thunkAPI) => {
     try {
@@ -68,7 +84,22 @@ export const surveyeeSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        
+
+        // get surveyees cases
+        .addCase(getSurveyees.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(getSurveyees.fulfilled, (state, action) => {
+          state.isLoading = false
+          state.isSuccess = true
+          state.surveyees = action.payload
+        })
+        .addCase(getSurveyees.rejected, (state, action) => {
+          state.isLoading = false
+          state.isError = true
+          state.message = action.payload
+        })
+
         // create surveyee cases
         .addCase(createSurveyee.pending, (state) => {
           state.isLoading = true

@@ -10,7 +10,10 @@ import ReactSpinner from './ReactSpinner'
 function GenerateForm() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
     const [authCode, setAuthCode] = useState("")
+    const [isCopied, setIsCopied] = useState(false)
+
     const { user } = useSelector((state) => state.auth)
     const { isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
 
@@ -42,6 +45,8 @@ function GenerateForm() {
     const handleCopy = (e) => {
         const baseUrl = "https://example.com/users/" 
         navigator.clipboard.writeText(baseUrl + authCode)
+        toast.success("Auth code copied to clipboard")
+        setIsCopied(true)
     }
 
     const handleSubmit = (e) => {
@@ -81,8 +86,8 @@ function GenerateForm() {
                 {/* save button */}
                 <Form.Group className="mb-3">
                     <Button type='button' onClick={handleGenerate} variant='warning'>Generate</Button>{ ' ' }
-                    <Button type='button' onClick={handleCopy} variant='secondary'>Copy URL</Button>{ ' ' }
-                    <Button type='submit' onClick={handleSubmit} variant='primary'>Save</Button>
+                    <Button type='button' disabled={!authCode} onClick={handleCopy} variant='secondary'>Copy URL</Button>{ ' ' }
+                    <Button type='submit' disabled={!authCode || !isCopied} onClick={handleSubmit} variant='primary'>Save</Button>
                 </Form.Group>
             </Form>
         </>

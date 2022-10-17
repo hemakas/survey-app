@@ -15,6 +15,10 @@ import Register from './pages/Register'
 import Instructions from './pages/Instructions'
 import Survey from './pages/Survey'
 
+// toastify
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 function App() {
   return (
     <>
@@ -35,6 +39,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer />
     </>
   );
 }

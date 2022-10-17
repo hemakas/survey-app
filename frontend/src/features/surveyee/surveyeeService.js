@@ -2,7 +2,18 @@ import axios from 'axios'
 
 const API_URL = '/api/surveyees/'
 
-// Create new surveyee
+// get all surveyees
+const getSurveyees = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(API_URL, config)
+  return response.data
+}
+
+// create new surveyee
 const createSurveyee = async (surveyeeData, token) => {
     const config = {
       headers: {
@@ -44,9 +55,10 @@ const deleteSurveyee = async (surveyeeId, token) => {
 }
 
 const surveyeeService = {
-    createSurveyee,
-    updateSurveyee,
-    deleteSurveyee
-  }
+  getSurveyees,  
+  createSurveyee,
+  updateSurveyee,
+  deleteSurveyee
+}
   
-  export default surveyeeService
+export default surveyeeService
