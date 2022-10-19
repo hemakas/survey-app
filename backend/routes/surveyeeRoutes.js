@@ -9,7 +9,7 @@ router.route('/')
   
 router.route('/:authCode')
   .post(surveyeeController.authorizeSurveyee)
-  .patch(surveyeeController.updateSurveyee)
+  .put(surveyeeController.updateSurveyee)
 
 router.route('/:id')
   .delete(surveyeeController.deletesurveyee)

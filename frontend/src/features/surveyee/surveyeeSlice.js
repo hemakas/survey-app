@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import surveyeeService from './surveyeeService'
 
-// Get user from localStorage
-const surveyee = JSON.parse(localStorage.getItem('surveyee'))
+// Get surveyee from localStorage
+// const surveyee = JSON.parse(localStorage.getItem('surveyee'))
 
 const initialState = {
-  surveyee: surveyee ? surveyee : null,
+  surveyee: {},
   surveyees: [],
   isError: false,
   isSuccess: false,
@@ -62,18 +62,17 @@ export const createSurveyee = createAsyncThunk('surveyees/create', async (survey
 
 // update surveyee
 export const updateSurveyee = createAsyncThunk('surveyees/updateSurveyee', async (surveyeeData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token
-      return await surveyeeService.updateSurveyee(surveyeeData, token)
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
-    }
+  try {
+    return await surveyeeService.updateSurveyee(surveyeeData)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
 })
 
 // Delete surveyee

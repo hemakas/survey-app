@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { Alert, Container, Table } from 'react-bootstrap'
 import { getSurveyees, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from '../components/ReactSpinner'
@@ -16,7 +17,7 @@ function Responses() {
 
   useEffect(() => {
     if (isError) {
-      console.log(message)
+      toast.error(message)
     }
 
     if (!user) {

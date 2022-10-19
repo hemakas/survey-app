@@ -34,22 +34,16 @@ const createSurveyee = async (surveyeeData, token) => {
 }
 
 // update surveyee
-const updateSurveyee = async (surveyeeData, token) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  
-    const updateData = {
-      name: surveyeeData.name,
-      email: surveyeeData.email,
-      phone: surveyeeData.phone,
-      answers: surveyeeData.answers,
-      isComplted: surveyeeData.isComplted,
-    }
-    const response = await axios.put(API_URL + surveyeeData.authCode, updateData, config)
-    return response.data
+const updateSurveyee = async (surveyeeData) => {
+  const updateData = {
+    name: surveyeeData.name,
+    email: surveyeeData.email,
+    phone: surveyeeData.phone,
+    answers: surveyeeData.answers,
+    isComplted: surveyeeData.isComplted,
+  }
+  const response = await axios.put(API_URL + surveyeeData.authCode, updateData)
+  return response.data
 }
 
 // delete surveyee

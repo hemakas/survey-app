@@ -40,12 +40,15 @@ const createSurveyee = asyncHandler(async (req, res) => {
 const authorizeSurveyee = asyncHandler(async (req, res) => {
     const surveyee = await Surveyee.findOne({ authCode : req.params.authCode }).lean()
 
-    if (!surveyee) {
+    if (surveyee) {
+        res.json({ 
+            _id: surveyee.id,
+            authCode: surveyee.authCode,
+            message: 'surveyee authorized successfully!' 
+        })
+    } else {
         return res.status(400).json({ message: 'Invalid auth code' })
     }
-
-    res.json({ message: 'surveyee authorized successfully' })
-
 })
 
 // update surveyee ----------------------------
