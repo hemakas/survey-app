@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Form, Button, Row } from 'react-bootstrap'
-import { getSurveyeeByAuthCode, reset } from '../features/surveyee/surveyeeSlice'
+import { getSurveyeeByAuthCode, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from './ReactSpinner'
 
 function LoginForm2() {
@@ -22,7 +22,7 @@ function LoginForm2() {
       navigate('/Register')
     }
 
-    dispatch(reset())
+    dispatch(resetSurveyee())
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
   const handleSetAuthCode = (e) => {

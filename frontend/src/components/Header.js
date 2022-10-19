@@ -3,7 +3,7 @@ import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { logoutSurveyee } from '../features/surveyee/surveyeeSlice'
+import { logoutSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -15,12 +15,14 @@ export const Header = () => {
     const onLogout = () => {
         dispatch(logout())
         dispatch(reset())
+        dispatch(resetSurveyee())
         navigate('/')
     }
 
     // surveyee logout
     const onLogout2 = () => {
         dispatch(logoutSurveyee())
+        dispatch(resetSurveyee())
         dispatch(reset())
         navigate('/')
     }
@@ -42,19 +44,15 @@ export const Header = () => {
                                     <FaSignOutAlt /> Logout
                                 </Button>
                             </>
-                            ) : ( 
+                            ) : surveyee ? (
                                 <>
+                                    <Nav.Link href="/Register"><FaUserPlus /> Register</Nav.Link>
+                                    <Nav.Link href="/Instructions"><FaInfo /> Instructions</Nav.Link>
+                                    <Nav.Link href="/Survey"><FaHourglassHalf /> Survey</Nav.Link>
+                                    <Button className='warning' onClick={onLogout2}>
+                                        <FaSignOutAlt /> Logout
+                                    </Button>
                                 </>
-                            )}
-                            { surveyee ? (
-                            <> 
-                                <Nav.Link href="/Register"><FaUserPlus /> Register</Nav.Link>
-                                <Nav.Link href="/Instructions"><FaInfo /> Instructions</Nav.Link>
-                                <Nav.Link href="/Survey"><FaHourglassHalf /> Survey</Nav.Link>
-                                <Button className='warning' onClick={onLogout2}>
-                                    <FaSignOutAlt /> Logout
-                                </Button>
-                            </>
                             ) : ( 
                                 <>
                                 </>

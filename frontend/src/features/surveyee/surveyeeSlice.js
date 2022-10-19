@@ -103,7 +103,12 @@ export const surveyeeSlice = createSlice({
     name: 'surveyee',
     initialState,
     reducers: {
-      reset: (state) => initialState,
+      resetSurveyee: (state) => {
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = false
+        state.message = ''
+      },
     },
     extraReducers: (builder) => {
       builder
@@ -136,6 +141,7 @@ export const surveyeeSlice = createSlice({
           state.isLoading = false
           state.isError = true
           state.message = action.payload
+          state.surveyee = null
         })
 
         // create surveyee cases
@@ -192,6 +198,6 @@ export const surveyeeSlice = createSlice({
     },
   })
   
-  export const { reset } = surveyeeSlice.actions
+  export const { resetSurveyee } = surveyeeSlice.actions
   export default surveyeeSlice.reducer
   

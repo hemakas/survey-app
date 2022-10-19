@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { v4 as uuidv4 } from 'uuid'
 import { Form, Button, Row, InputGroup } from 'react-bootstrap'
-import { createSurveyee, reset } from '../features/surveyee/surveyeeSlice'
+import { createSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from './ReactSpinner'
 
 function GenerateForm() {
@@ -31,7 +31,7 @@ function GenerateForm() {
             navigate('/Responses')
         }
 
-        dispatch(reset())
+        dispatch(resetSurveyee())
     }, [isError, isSuccess, message, navigate, dispatch])
     
     const handleSetAuthCode = (e) => {

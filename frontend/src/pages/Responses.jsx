@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Alert, Container, Table } from 'react-bootstrap'
-import { getSurveyees, reset } from '../features/surveyee/surveyeeSlice'
+import { getSurveyees, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from '../components/ReactSpinner'
 import SurveyeeItem from '../components/SurveyeeItem'
 
@@ -26,7 +26,7 @@ function Responses() {
     dispatch(getSurveyees())
 
     return () => {
-      dispatch(reset())
+      dispatch(resetSurveyee())
     }
 
   }, [user, navigate, isError, message, dispatch])
