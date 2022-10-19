@@ -24,7 +24,7 @@ function App() {
     <>
       <Router>
         <div>
-        <Header />
+          <Header />
           
           <Routes>
             {/* auth routes */}
@@ -34,6 +34,7 @@ function App() {
 
             {/* surveyee routes */}
             <Route path='/Register' element={<Register />} />
+            <Route path='/Register/:authCode' element={<Register />} />
             <Route path='/Instructions' element={<Instructions />} />
             <Route path='/Survey' element={<Survey />} />
           </Routes>

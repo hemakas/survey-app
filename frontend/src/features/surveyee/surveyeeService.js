@@ -13,6 +13,15 @@ const getSurveyees = async (token) => {
   return response.data
 }
 
+// get surveyee by auth code
+const getSurveyeeByAuthCode = async (authCode) => {
+  const response = await axios.post(API_URL + authCode)
+  if (response.data) {
+    localStorage.setItem('surveyee', JSON.stringify(response.data))
+  }
+  return response.data
+}
+
 // create new surveyee
 const createSurveyee = async (surveyeeData, token) => {
     const config = {
@@ -54,11 +63,18 @@ const deleteSurveyee = async (surveyeeId, token) => {
     return response.data
 }
 
+// Logout user
+const logoutSurveyee = () => {
+  localStorage.removeItem('surveyee')
+}
+
 const surveyeeService = {
-  getSurveyees,  
+  getSurveyees,
+  getSurveyeeByAuthCode,
   createSurveyee,
   updateSurveyee,
-  deleteSurveyee
+  deleteSurveyee,
+  logoutSurveyee
 }
   
 export default surveyeeService

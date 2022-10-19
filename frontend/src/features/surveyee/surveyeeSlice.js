@@ -1,8 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import surveyeeService from './surveyeeService'
 
+// Get user from localStorage
+const surveyee = JSON.parse(localStorage.getItem('surveyee'))
+
 const initialState = {
-  surveyee: {},
+  surveyee: surveyee ? surveyee : null,
   surveyees: [],
   isError: false,
   isSuccess: false,
@@ -15,6 +18,21 @@ export const getSurveyees = createAsyncThunk('surveyees/getAll', async (_, thunk
   try {
     const token = thunkAPI.getState().auth.user.token
     return await surveyeeService.getSurveyees(token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// get surveyee by auth code
+export const getSurveyeeByAuthCode = createAsyncThunk('surveyees/getSurveyeeByAuthCode', async (authCode, thunkAPI) => {
+  try {
+    return await surveyeeService.getSurveyeeByAuthCode(authCode)
   } catch (error) {
     const message =
       (error.response &&
@@ -73,6 +91,11 @@ export const deleteSurveyee = createAsyncThunk('surveyees/delete', async (id, th
       return thunkAPI.rejectWithValue(message)
     }
 })
+
+// logout user
+export const logoutSurveyee = createAsyncThunk('surveyees/logout', async () => {
+  await surveyeeService.logoutSurveyee()
+})
   
 
 // builder methods
@@ -95,6 +118,21 @@ export const surveyeeSlice = createSlice({
           state.surveyees = action.payload
         })
         .addCase(getSurveyees.rejected, (state, action) => {
+          state.isLoading = false
+          state.isError = true
+          state.message = action.payload
+        })
+
+        // get surveyees by auth code cases
+        .addCase(getSurveyeeByAuthCode.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(getSurveyeeByAuthCode.fulfilled, (state, action) => {
+          state.isLoading = false
+          state.isSuccess = true
+          state.surveyee = action.payload
+        })
+        .addCase(getSurveyeeByAuthCode.rejected, (state, action) => {
           state.isLoading = false
           state.isError = true
           state.message = action.payload
@@ -145,6 +183,11 @@ export const surveyeeSlice = createSlice({
           state.isLoading = false
           state.isError = true
           state.message = action.payload
+        })
+
+        // clear surveyee from local storage when surveyee logs out
+        .addCase(logoutSurveyee.fulfilled, (state) => {
+          state.surveyee = null
         })
     },
   })

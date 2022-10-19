@@ -1,18 +1,28 @@
 import { FaLock, FaReply, FaUserPlus, FaInfo, FaHourglassHalf, FaSignOutAlt } from 'react-icons/fa'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
+import { logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
+    const { surveyee } = useSelector((state) => state.surveyee)
   
+    // user logout
     const onLogout = () => {
-      dispatch(logout())
-      dispatch(reset())
-      navigate('/')
+        dispatch(logout())
+        dispatch(reset())
+        navigate('/')
+    }
+
+    // surveyee logout
+    const onLogout2 = () => {
+        dispatch(logoutSurveyee())
+        dispatch(reset())
+        navigate('/')
     }
 
     return (
@@ -32,14 +42,24 @@ export const Header = () => {
                                     <FaSignOutAlt /> Logout
                                 </Button>
                             </>
-                            ) : (
+                            ) : ( 
+                                <>
+                                </>
+                            )}
+                            { surveyee ? (
                             <> 
                                 <Nav.Link href="/Register"><FaUserPlus /> Register</Nav.Link>
                                 <Nav.Link href="/Instructions"><FaInfo /> Instructions</Nav.Link>
                                 <Nav.Link href="/Survey"><FaHourglassHalf /> Survey</Nav.Link>
-
+                                <Button className='warning' onClick={onLogout2}>
+                                    <FaSignOutAlt /> Logout
+                                </Button>
                             </>
+                            ) : ( 
+                                <>
+                                </>
                             )}
+                            
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
