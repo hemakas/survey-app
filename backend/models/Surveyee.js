@@ -8,6 +8,7 @@ const surveyeeSchema = new Schema({
     phone: { type: String },
     authCode: { type: String },
     answers: [{type: String}],
+    startedOn: { type: Date },
     isCompleted: { 
         type: Boolean,
         default: false

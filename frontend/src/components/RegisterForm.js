@@ -10,6 +10,8 @@ function RegisterForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const { surveyee, isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,18 +21,13 @@ function RegisterForm() {
 
   const { firstName, lastName, email, phone } = formData
 
-  const { surveyee, isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
-
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
-
-    if (!surveyee) {
-      navigate('/')
-    }
-
-    if (isSuccess) {
+    
+    if (isSuccess || surveyee.name) {
+    // if (isSuccess) {
       toast.success("Information saved successfully")
       navigate('/Instructions')
     }
@@ -55,7 +52,7 @@ function RegisterForm() {
     if (!email || email === '')
       toast.error('Please enter email')
     else {
-      const userData = {
+      const surveyeeData = {
         authCode : surveyee.authCode,
         name : firstName + ' ' + lastName,
         email,
@@ -63,7 +60,7 @@ function RegisterForm() {
       }
 
       // update surveyee
-      dispatch(updateSurveyee(userData))
+      dispatch(updateSurveyee(surveyeeData))
     }
   }
 

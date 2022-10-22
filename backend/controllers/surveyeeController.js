@@ -43,8 +43,12 @@ const authorizeSurveyee = asyncHandler(async (req, res) => {
     if (surveyee) {
         res.json({ 
             _id: surveyee.id,
+            name: surveyee.name,
+            email: surveyee.email,
             authCode: surveyee.authCode,
-            message: 'surveyee authorized successfully!' 
+            answers: surveyee.answers,
+            startedOn: surveyee.startedOn,
+            isCompleted: surveyee.isCompleted
         })
     } else {
         return res.status(400).json({ message: 'Invalid auth code' })
