@@ -12,7 +12,12 @@ const initialState = {
     message: '',
 }
 
-// set timer on end survey
+// set time
+export const setTimer = createAsyncThunk('timer/set', async (time) => {
+    timerService.setTimer(time)
+})
+
+// end timer on end survey
 export const endTimer = createAsyncThunk('timer/end', async () => {
     timerService.endTimer()
 })
@@ -30,7 +35,7 @@ export const timerSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-      
+
     },
   })
 
