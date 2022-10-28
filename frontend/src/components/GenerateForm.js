@@ -43,8 +43,7 @@ function GenerateForm() {
     }
 
     const handleCopy = (e) => {
-        const baseUrl = "https://example.com/users/" 
-        navigator.clipboard.writeText(baseUrl + authCode)
+        navigator.clipboard.writeText(authCode)
         toast.success("Auth code copied to clipboard")
         setIsCopied(true)
     }
@@ -77,11 +76,11 @@ function GenerateForm() {
                 </Form.Group>
 
                 {/* url with code */}
-                <Form.Label>Your vanity URL</Form.Label>
+                {/* <Form.Label>Your vanity URL</Form.Label>
                 <InputGroup className="mb-3">
                     <InputGroup.Text id="basic-addon3">https://example.com/users/</InputGroup.Text>
                     <Form.Control name="authCode" id="authCode" aria-describedby="basic-addon3" value={authCode} onChange={handleSetAuthCode} />
-                </InputGroup>
+                </InputGroup> */}
 
                 {/* save button */}
                 <Form.Group className="mb-3">

@@ -7,8 +7,12 @@ const surveyeeSchema = new Schema({
     email: { type: String },
     phone: { type: String },
     authCode: { type: String },
-    answers: [{type: String}],
+    answers: [{ type: String }],
     startedOn: { type: Date },
+    timeRemaining: {
+        type: Number,
+        default: 0
+    },
     isCompleted: { 
         type: Boolean,
         default: false

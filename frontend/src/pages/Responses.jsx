@@ -53,6 +53,7 @@ function Responses() {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Answers</th>
+                <th>Time Remaining</th>
                 <th>Completed</th>
                 <th>Action</th>
               </tr>

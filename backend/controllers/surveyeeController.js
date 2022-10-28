@@ -48,6 +48,7 @@ const authorizeSurveyee = asyncHandler(async (req, res) => {
             authCode: surveyee.authCode,
             answers: surveyee.answers,
             startedOn: surveyee.startedOn,
+            timeRemaining: surveyee.timeRemaining,
             isCompleted: surveyee.isCompleted
         })
     } else {
@@ -64,7 +65,7 @@ const updateSurveyee = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'Surveyee not found' })
     }
     
-    const { name, email, phone, answers, isCompleted } = req.body
+    const { name, email, phone, answers, startedOn, timeRemaining, isCompleted } = req.body
     
     const updatedSurveyee = await Surveyee.updateOne(
         { authCode : req.params.authCode }, 
@@ -73,6 +74,8 @@ const updateSurveyee = asyncHandler(async (req, res) => {
             email : email, 
             phone : phone,
             answers: answers,
+            startedOn : startedOn,
+            timeRemaining : timeRemaining, 
             isCompleted: isCompleted
         }})
 

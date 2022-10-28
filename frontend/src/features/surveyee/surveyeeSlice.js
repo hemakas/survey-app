@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import surveyeeService from './surveyeeService'
 
 // Get surveyee from localStorage
-// const surveyee = JSON.parse(localStorage.getItem('surveyee'))
+const surveyee = JSON.parse(localStorage.getItem('surveyee'))
 
 const initialState = {
-  surveyee: {},
+  surveyee: surveyee ? surveyee : null,
   surveyees: [],
   isError: false,
   isSuccess: false,

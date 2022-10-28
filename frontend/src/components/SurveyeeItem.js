@@ -13,6 +13,7 @@ function SurveyeeItem({ surveyee, index }) {
             <td>{surveyee.email}</td>
             <td>{surveyee.phone}</td>
             <td>{surveyee.answers}</td>
+            <td>{Math.floor(surveyee.timeRemaining / 60 )} Mins</td>
             <td>{surveyee.isCompleted ? 'Yes' : 'No'}</td>
             <td>
                 <button onClick={() => dispatch(deleteSurveyee(surveyee._id))}><FaTrash /></button>

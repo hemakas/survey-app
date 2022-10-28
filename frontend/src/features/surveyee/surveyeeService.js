@@ -41,6 +41,7 @@ const updateSurveyee = async (surveyeeData) => {
     phone: surveyeeData.phone,
     answers: surveyeeData.answers,
     startedOn: surveyeeData.startedOn,
+    timeRemaining : surveyeeData.timeRemaining, 
     isComplted: surveyeeData.isComplted,
   }
   const response = await axios.put(API_URL + surveyeeData.authCode, updateData)

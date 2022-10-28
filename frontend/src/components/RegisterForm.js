@@ -26,13 +26,11 @@ function RegisterForm() {
       toast.error(message)
     }
     
-    if (isSuccess || surveyee.name) {
-    // if (isSuccess) {
+    if (isSuccess || (surveyee && surveyee.name != null)) {
       toast.success("Information saved successfully")
       navigate('/Instructions')
     }
 
-    dispatch(resetSurveyee())
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e) => {

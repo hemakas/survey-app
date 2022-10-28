@@ -27,7 +27,6 @@ export const timerSlice = createSlice({
     initialState,
     reducers: {
         resetTimer: (state) => {
-            state.surveyTimer = null
             state.isLoading = false
             state.isSuccess = false
             state.isError = false
