@@ -17,15 +17,12 @@ function LoginFormSurveyee() {
       toast.error(message)
     }
 
-    if (isSuccess) {
+    if (isSuccess && authCode != '') {
       // toast.success("Logged in successfully")
       navigate('/Register')
     }
-
-    return () => {
-      dispatch(resetSurveyee())
-    }
-
+    
+    dispatch(resetSurveyee())
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
   // set auth code 
@@ -41,7 +38,7 @@ function LoginFormSurveyee() {
       toast.error('Auth code field is required')
     } else {
       // get surveyee by auth code
-      dispatch(getSurveyeeByAuthCode(authCode))
+      dispatch(getSurveyeeByAuthCode({ authCode }))
     }
   }
 

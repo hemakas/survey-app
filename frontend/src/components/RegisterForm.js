@@ -31,9 +31,7 @@ function RegisterForm() {
       navigate('/Instructions')
     }
 
-    return () => {
-      dispatch(resetSurveyee())
-    }
+    dispatch(resetSurveyee())
     
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 

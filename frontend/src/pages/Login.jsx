@@ -1,9 +1,10 @@
-import React from 'react'
 import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
 import LoginFormSurveyee from '../components/LoginFormSurveyee'
 
 function Login() {
+  // window.location.reload(false)
+
   return (
     <>
       <Alert variant="success">

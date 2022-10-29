@@ -40,7 +40,7 @@ const createSurveyee = asyncHandler(async (req, res) => {
 const authorizeSurveyee = asyncHandler(async (req, res) => {
     const { authCode } = req.body
     
-    const surveyee = await Surveyee.findOne(authCode).lean()
+    const surveyee = await Surveyee.findOne({ authCode })
 
     if (surveyee) {
         res.json({ 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Form } from 'react-bootstrap'
 import { updateSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
-import { setTimer } from '../features/timer/timerSlice'
+import { setTimer, resetTimer } from '../features/timer/timerSlice'
 
 function InstructionsList() {
   const navigate = useNavigate()
@@ -23,9 +23,9 @@ function InstructionsList() {
       navigate('/Survey')
     }
 
-    return () => {
-      dispatch(resetSurveyee())
-    }
+    dispatch(resetSurveyee())
+
+    dispatch(resetTimer())
 
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
@@ -35,7 +35,7 @@ function InstructionsList() {
 
     // set timer
     dispatch(setTimer(surveyee.timeRemaining))
-
+    
     const surveyeeData = { 
       authCode : surveyee.authCode,
       startedOn : new Date()

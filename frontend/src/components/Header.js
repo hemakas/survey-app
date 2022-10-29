@@ -1,4 +1,4 @@
-import { FaLock, FaReply, FaUserPlus, FaInfo, FaHourglassHalf, FaSignOutAlt } from 'react-icons/fa'
+import { FaLock, FaReply, FaSignOutAlt } from 'react-icons/fa'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -22,10 +22,10 @@ export const Header = () => {
 
     // surveyee logout
     const onLogout2 = () => {   
-        dispatch(resetSurveyee())
-        dispatch(logoutSurveyee())
         dispatch(resetTimer())
         dispatch(endTimer())
+        dispatch(resetSurveyee())
+        dispatch(logoutSurveyee())
         dispatch(reset())
         navigate('/')
     }
@@ -49,9 +49,9 @@ export const Header = () => {
                             </>
                             ) : surveyee ? (
                                 <>
-                                    <Nav.Link href="/Register"><FaUserPlus /> Register</Nav.Link>
+                                    {/* <Nav.Link href="/Register"><FaUserPlus /> Register</Nav.Link>
                                     <Nav.Link href="/Instructions"><FaInfo /> Instructions</Nav.Link>
-                                    <Nav.Link href="/Survey"><FaHourglassHalf /> Survey</Nav.Link>
+                                    <Nav.Link href="/Survey"><FaHourglassHalf /> Survey</Nav.Link> */}
                                     <Button className='warning' onClick={onLogout2}>
                                         <FaSignOutAlt /> Logout
                                     </Button>

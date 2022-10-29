@@ -16,9 +16,7 @@ function Survey() {
   const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = surveyee.timeRemaining
-
-  console.log(surveyee)
+  let totalTime = surveyTimer
 
   useEffect(() => {
 
@@ -29,9 +27,12 @@ function Survey() {
         const minutes = Math.floor(totalTime / 60)
         let seconds = totalTime % 60
         seconds = seconds < 10 ? '0' + seconds : seconds
-        
+
         // break from setInterval loop
         if (totalTime === 0) {
+
+          setTime(minutes + ' minutes ')
+          
           const surveyeeData = { 
             authCode : surveyee.authCode,
             timeRemaining : 0,
@@ -61,12 +62,9 @@ function Survey() {
     
         // update surveyee
         dispatch(updateSurveyee(surveyeeData))
-
-        console.log('timer : ' + surveyTimer + '  surveyee timer : ' + surveyee.timeRemaining)
-
       }
     }, 1000)
-    
+
   }, [dispatch, surveyTimer, surveyee.authCode, surveyee.timeRemaining, totalTime])
 
   return (
