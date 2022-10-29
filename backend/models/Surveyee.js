@@ -11,7 +11,7 @@ const surveyeeSchema = new Schema({
     startedOn: { type: Date },
     timeRemaining: {
         type: Number,
-        default: 0
+        default: 1800
     },
     isCompleted: { 
         type: Boolean,

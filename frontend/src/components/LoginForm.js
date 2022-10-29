@@ -25,7 +25,7 @@ function LoginForm() {
         }
     
         if (isSuccess) {
-            toast.success("Logged in successfully")
+            // toast.success("Logged in successfully")
             navigate('/Generate')
         }
     

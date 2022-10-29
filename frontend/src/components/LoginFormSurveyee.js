@@ -6,7 +6,7 @@ import { Form, Button, Row } from 'react-bootstrap'
 import { getSurveyeeByAuthCode, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from './ReactSpinner'
 
-function LoginForm2() {
+function LoginFormSurveyee() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [authCode, setAuthCode] = useState("")
@@ -18,22 +18,26 @@ function LoginForm2() {
     }
 
     if (isSuccess) {
-      toast.success("Logged in successfully")
+      // toast.success("Logged in successfully")
       navigate('/Register')
     }
 
-    dispatch(resetSurveyee())
+    return () => {
+      dispatch(resetSurveyee())
+    }
+
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
+  // set auth code 
   const handleSetAuthCode = (e) => {
     setAuthCode(e.target.value)
   }
 
-  // form submit
-  const handleSubmit2 = (e) => {
+  // form submit surveyee
+  const handleSubmitSurveyee = (e) => {
     e.preventDefault()
 
-    if (!authCode || authCode == '') {
+    if (!authCode || authCode === '') {
       toast.error('Auth code field is required')
     } else {
       // get surveyee by auth code
@@ -58,11 +62,11 @@ function LoginForm2() {
 
           {/* login button */}
           <Form.Group>
-            <Button type='submit' onClick={handleSubmit2} variant='danger'>Validate</Button>
+            <Button type='submit' onClick={handleSubmitSurveyee} variant='danger'>Validate</Button>
           </Form.Group>
       </Form>
     </>
   )
 }
 
-export default LoginForm2
+export default LoginFormSurveyee

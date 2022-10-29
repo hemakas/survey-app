@@ -38,7 +38,9 @@ const createSurveyee = asyncHandler(async (req, res) => {
 
 // authorize surveyee ----------------------------
 const authorizeSurveyee = asyncHandler(async (req, res) => {
-    const surveyee = await Surveyee.findOne({ authCode : req.params.authCode }).lean()
+    const { authCode } = req.body
+    
+    const surveyee = await Surveyee.findOne(authCode).lean()
 
     if (surveyee) {
         res.json({ 

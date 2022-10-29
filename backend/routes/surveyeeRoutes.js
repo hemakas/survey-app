@@ -7,8 +7,10 @@ router.route('/')
   .get(surveyeeController.getAllSurveyees)
   .post(surveyeeController.createSurveyee)
   
-router.route('/:authCode')
+router.route('/login')
   .post(surveyeeController.authorizeSurveyee)
+
+router.route('/:authCode')
   .put(surveyeeController.updateSurveyee)
 
 router.route('/:id')

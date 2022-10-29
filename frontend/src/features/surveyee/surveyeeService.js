@@ -15,7 +15,7 @@ const getSurveyees = async (token) => {
 
 // get surveyee by auth code
 const getSurveyeeByAuthCode = async (authCode) => {
-  const response = await axios.post(API_URL + authCode)
+  const response = await axios.post(API_URL + 'login' , authCode)
   if (response.data) {
     localStorage.setItem('surveyee', JSON.stringify(response.data))
   }

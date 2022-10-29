@@ -9,6 +9,8 @@ function Generate() {
   const navigate = useNavigate()
   const { user } = useSelector((state) => state.auth)
 
+  console.log(user)
+
   useEffect(() => {
     // redirect if user not found
     if (!user) {

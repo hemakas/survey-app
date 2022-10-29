@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,36 +9,32 @@ import { setTimer } from '../features/timer/timerSlice'
 function InstructionsList() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const minutes = 30
 
-  const { surveyee, isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
-  const { surveyTimer } = useSelector((state) => state.timer)
-
-  console.log(surveyee)
+  const { surveyee, isError, isSuccess, message } = useSelector((state) => state.surveyee)
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
-    
+
     if (isSuccess) {
+      const minutes = Math.floor(surveyee.timeRemaining / 60)
       toast.success(`You have ${minutes} minutes left to answer the questions`)
       navigate('/Survey')
     }
+
+    return () => {
+      dispatch(resetSurveyee())
+    }
+
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
+  // begin survey button is clicked
   const handleEntry = (e) => {
     e.preventDefault()
-    const totalTime = 30 * 60
 
-    if (surveyee.timeRemaining == 0) {
-      // set timer
-      dispatch(setTimer(totalTime))
-    } else {
-      const minutes = Math.floor(surveyee.timeRemaining / 60)
-      // set timer
-      dispatch(setTimer(surveyee.timeRemaining))
-    }
+    // set timer
+    dispatch(setTimer(surveyee.timeRemaining))
 
     const surveyeeData = { 
       authCode : surveyee.authCode,

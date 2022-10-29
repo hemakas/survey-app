@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
-import LoginForm2 from '../components/LoginForm2'
+import LoginFormSurveyee from '../components/LoginFormSurveyee'
 
 function Login() {
   return (
@@ -16,7 +16,7 @@ function Login() {
             <Card>
               <Card.Body>
                 <Card.Title className='text-center'>Login with auth code</Card.Title>
-                <LoginForm2 />
+                <LoginFormSurveyee />
               </Card.Body>
             </Card>
           </Col> 

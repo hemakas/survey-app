@@ -5,7 +5,7 @@ import timerService from './timerService'
 const surveyTimer = JSON.parse(localStorage.getItem('surveyTimer'))
 
 const initialState = {
-    surveyTimer: surveyTimer ? surveyTimer : null,
+    surveyTimer: surveyTimer ? surveyTimer : 0,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -34,7 +34,6 @@ export const timerSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-
     },
   })
 

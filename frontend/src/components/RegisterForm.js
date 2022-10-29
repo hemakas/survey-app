@@ -26,11 +26,15 @@ function RegisterForm() {
       toast.error(message)
     }
     
-    if (isSuccess || (surveyee && surveyee.name != null)) {
-      toast.success("Information saved successfully")
+    if ((isSuccess) || (surveyee && surveyee.name != null)) {
+      // toast.success("Information saved successfully")
       navigate('/Instructions')
     }
 
+    return () => {
+      dispatch(resetSurveyee())
+    }
+    
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e) => {
@@ -45,7 +49,7 @@ function RegisterForm() {
     e.preventDefault()
 
     // form validation rules
-    if (!firstName || firstName === '' && !lastName || lastName === '')
+    if ((!firstName || firstName === '') && (!lastName || lastName === ''))
       toast.error('Please enter either first name or last name')
     if (!email || email === '')
       toast.error('Please enter email')

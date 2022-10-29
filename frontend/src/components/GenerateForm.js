@@ -54,9 +54,11 @@ function GenerateForm() {
         if(!authCode || authCode == '') {
             toast.error('Please generate an auth code')
         } else {
-            const surveyeeData = { authCode }
+            const surveyeeData = { 
+                authCode,
+            }
 
-            // save event
+            // create surveyee
             dispatch(createSurveyee(surveyeeData))
         }
     }

@@ -15,6 +15,8 @@ function Responses() {
   const { user } = useSelector((state) => state.auth)
   const { surveyees, isLoading, isError, message } = useSelector((state) => state.surveyee)
 
+  console.log(user)
+
   useEffect(() => {
     if (isError) {
       toast.error(message)

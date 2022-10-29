@@ -6,7 +6,7 @@ const setTimer = (time) => {
 
 // end timer
 const endTimer = () => {
-  localStorage.removeItem('timer')
+  localStorage.removeItem('surveyTimer')
 }
 
 const timerService = {

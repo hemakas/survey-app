@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Alert, Col } from 'react-bootstrap'
-import { setTimer, endTimer, resetTimer } from '../features/timer/timerSlice'
-import { updateSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { Alert } from 'react-bootstrap'
+import { setTimer, endTimer } from '../features/timer/timerSlice'
+import { updateSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/ModalOnEndSurvey'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,15 +13,12 @@ function Survey() {
   const [time, setTime] = useState('')
   const [modalShow, setModalShow] = useState(false)
 
-  const { surveyee, isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
+  const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
-  const startingMin = 30
-  let totalTime = startingMin * 60
+  let totalTime = surveyee.timeRemaining
 
-  if (surveyTimer != null) {
-    totalTime = surveyTimer
-  }
+  console.log(surveyee)
 
   useEffect(() => {
 
@@ -31,36 +28,46 @@ function Survey() {
       if (totalTime > 0) {
         const minutes = Math.floor(totalTime / 60)
         let seconds = totalTime % 60
-  
         seconds = seconds < 10 ? '0' + seconds : seconds
+        
+        // break from setInterval loop
+        if (totalTime === 0) {
+          const surveyeeData = { 
+            authCode : surveyee.authCode,
+            timeRemaining : 0,
+            isCompleted : true
+          }
+      
+          // update surveyee
+          dispatch(updateSurveyee(surveyeeData))
+          
+          // end timer
+          dispatch(endTimer())
+          setModalShow(true)
+          clearInterval(x)
+        }
+
         totalTime--
   
         setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
   
         // set/update timer
         dispatch(setTimer(totalTime))
-      } else {
 
         const surveyeeData = { 
           authCode : surveyee.authCode,
-          timeRemaining : 0,
-          isCompleted : true
+          timeRemaining : totalTime,
         }
     
         // update surveyee
         dispatch(updateSurveyee(surveyeeData))
 
-        // end timer
-        dispatch(endTimer())
-        setModalShow(true)
-
-        clearInterval(x);
+        console.log('timer : ' + surveyTimer + '  surveyee timer : ' + surveyee.timeRemaining)
 
       }
-      
     }, 1000)
     
-  }, [dispatch])
+  }, [dispatch, surveyTimer, surveyee.authCode, surveyee.timeRemaining, totalTime])
 
   return (
     <>

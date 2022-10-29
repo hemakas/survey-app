@@ -3,16 +3,15 @@ import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { logoutSurveyee, resetSurveyee, updateSurveyee } from '../features/surveyee/surveyeeSlice'
-import { resetTimer } from '../features/timer/timerSlice'
+import { logoutSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { endTimer, resetTimer } from '../features/timer/timerSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { surveyee } = useSelector((state) => state.surveyee)
-    const { surveyTimer } = useSelector((state) => state.timer)
-  
+
     // user logout
     const onLogout = () => {
         dispatch(logout())
@@ -23,17 +22,10 @@ export const Header = () => {
 
     // surveyee logout
     const onLogout2 = () => {   
-        const surveyeeData = {
-            authCode : surveyee.authCode,
-            timeRemaining : surveyTimer,
-        }
-
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
-
-        // dispatch(resetSurveyee())
+        dispatch(resetSurveyee())
         dispatch(logoutSurveyee())
         dispatch(resetTimer())
+        dispatch(endTimer())
         dispatch(reset())
         navigate('/')
     }
