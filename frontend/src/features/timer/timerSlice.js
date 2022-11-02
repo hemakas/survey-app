@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import timerService from './timerService'
 
 // get timer from localStorage
-const surveyTimer = JSON.parse(localStorage.getItem('surveyTimer'))
+const surveyTimer = localStorage.getItem('surveyTimer')
 
 const initialState = {
     surveyTimer: surveyTimer ? surveyTimer : 0,
@@ -34,6 +34,18 @@ export const timerSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+
+        builder
+
+        // set timer case
+        .addCase(setTimer.fulfilled, (state, action) => {
+            state.surveyTimer = action.payload
+        })
+
+        // end timer case
+        .addCase(endTimer.fulfilled, (state) => {
+            state.surveyTimer = 0
+        })
     },
   })
 

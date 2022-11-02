@@ -11,7 +11,9 @@ function InstructionsList() {
   const dispatch = useDispatch()
 
   const { surveyee, isError, isSuccess, message } = useSelector((state) => state.surveyee)
-
+  
+  console.log('hehehe  ' + surveyee.timeRemaining)
+  
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -33,8 +35,10 @@ function InstructionsList() {
   const handleEntry = (e) => {
     e.preventDefault()
 
+    const time = surveyee.timeRemaining
+
     // set timer
-    dispatch(setTimer(surveyee.timeRemaining))
+    dispatch(setTimer(time))
     
     const surveyeeData = { 
       authCode : surveyee.authCode,

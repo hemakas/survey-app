@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 import { setTimer, endTimer } from '../features/timer/timerSlice'
-import { updateSurveyee } from '../features/surveyee/surveyeeSlice'
+import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/ModalOnEndSurvey'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ function Survey() {
   const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = surveyTimer
+  let totalTime = surveyee.timeRemaining
 
   useEffect(() => {
 
@@ -27,26 +27,6 @@ function Survey() {
         const minutes = Math.floor(totalTime / 60)
         let seconds = totalTime % 60
         seconds = seconds < 10 ? '0' + seconds : seconds
-
-        // break from setInterval loop
-        if (totalTime === 0) {
-
-          setTime(minutes + ' minutes ')
-          
-          const surveyeeData = { 
-            authCode : surveyee.authCode,
-            timeRemaining : 0,
-            isCompleted : true
-          }
-      
-          // update surveyee
-          dispatch(updateSurveyee(surveyeeData))
-          
-          // end timer
-          dispatch(endTimer())
-          setModalShow(true)
-          clearInterval(x)
-        }
 
         totalTime--
   
@@ -62,6 +42,24 @@ function Survey() {
     
         // update surveyee
         dispatch(updateSurveyee(surveyeeData))
+      } else {
+        setTime('0 minutes')
+        
+        const surveyeeData = { 
+          authCode : surveyee.authCode,
+          // timeRemaining : 0,
+          isCompleted : true
+        }
+    
+        // update surveyee
+        dispatch(updateSurveyee(surveyeeData))
+        
+        // end timer
+        // dispatch(endTimer())
+        // setModalShow(true)
+
+        // break loop
+        clearInterval(x)
       }
     }, 1000)
 
@@ -79,6 +77,9 @@ function Survey() {
         onHide = {
             () => {
             setModalShow(false)
+            dispatch(endTimer())
+            dispatch(resetSurveyee())
+            dispatch(logoutSurveyee())
             navigate('/')
           }
         }
