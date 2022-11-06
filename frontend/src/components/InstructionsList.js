@@ -11,8 +11,9 @@ function InstructionsList() {
   const dispatch = useDispatch()
 
   const { surveyee, isError, isSuccess, message } = useSelector((state) => state.surveyee)
-  
-  console.log('hehehe  ' + surveyee.timeRemaining)
+  const { surveyTimer } = useSelector((state) => state.timer)
+
+  // console.log('surveyee remaining time  ' + surveyee.timeRemaining)
   
   useEffect(() => {
     if (isError) {
@@ -23,11 +24,11 @@ function InstructionsList() {
       const minutes = Math.floor(surveyee.timeRemaining / 60)
       toast.success(`You have ${minutes} minutes left to answer the questions`)
       navigate('/Survey')
+
+      // console.log('survey Timer ' + surveyTimer)
     }
 
     dispatch(resetSurveyee())
-
-    dispatch(resetTimer())
 
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 

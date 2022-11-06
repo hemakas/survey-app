@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { logoutSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
-import { endTimer, resetTimer } from '../features/timer/timerSlice'
+import { resetTimer } from '../features/timer/timerSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -23,7 +23,6 @@ export const Header = () => {
     // surveyee logout
     const onLogout2 = () => {   
         dispatch(resetTimer())
-        dispatch(endTimer())
         dispatch(resetSurveyee())
         dispatch(logoutSurveyee())
         dispatch(reset())

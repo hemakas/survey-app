@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Alert } from 'react-bootstrap'
-import { setTimer, endTimer } from '../features/timer/timerSlice'
+import { Alert, Form } from 'react-bootstrap'
+import { setTimer, countDownTimer, resetTimer } from '../features/timer/timerSlice'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/ModalOnEndSurvey'
 import { useNavigate } from 'react-router-dom'
+import { CountDownTimer } from '../features/timer/timerSlice'
 
 function Survey() {
   const dispatch = useDispatch()
@@ -16,60 +17,19 @@ function Survey() {
   const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = surveyee.timeRemaining
+  // console.log('surveyee remaining time' + surveyee.timeRemaining)
+  // console.log('survey Timer ' + surveyTimer)
 
-  useEffect(() => {
+  const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
+  const NOW_IN_MS = new Date().getTime();
 
-    // run in every second
-    let x = setInterval(function() {
-
-      if (totalTime > 0) {
-        const minutes = Math.floor(totalTime / 60)
-        let seconds = totalTime % 60
-        seconds = seconds < 10 ? '0' + seconds : seconds
-
-        totalTime--
+  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
   
-        setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
-  
-        // set/update timer
-        dispatch(setTimer(totalTime))
-
-        const surveyeeData = { 
-          authCode : surveyee.authCode,
-          timeRemaining : totalTime,
-        }
-    
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
-      } else {
-        setTime('0 minutes')
-        
-        const surveyeeData = { 
-          authCode : surveyee.authCode,
-          // timeRemaining : 0,
-          isCompleted : true
-        }
-    
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
-        
-        // end timer
-        // dispatch(endTimer())
-        // setModalShow(true)
-
-        // break loop
-        clearInterval(x)
-      }
-    }, 1000)
-
-  }, [dispatch, surveyTimer, surveyee.authCode, surveyee.timeRemaining, totalTime])
-
   return (
     <>
       <Alert variant="success">
         <Alert.Heading>Survey</Alert.Heading>
-        <div className="d-flex justify-content-end">You have: {time}</div>
+        <CountDownTimer targetDate={dateTimeAfterThreeDays} />
       </Alert>
 
       <ModalOnEndSurvey 
@@ -77,14 +37,13 @@ function Survey() {
         onHide = {
             () => {
             setModalShow(false)
-            dispatch(endTimer())
+            dispatch(resetTimer())
             dispatch(resetSurveyee())
             dispatch(logoutSurveyee())
             navigate('/')
           }
         }
       />
-      
     </>
   )
 }
