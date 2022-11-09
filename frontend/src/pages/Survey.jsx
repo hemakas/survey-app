@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 import { setTimer, endTimer } from '../features/timer/timerSlice'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
-import ModalOnEndSurvey from '../components/ModalOnEndSurvey'
+import ModalOnEndSurvey from '../components/modals/ModalOnEndSurvey'
+import QuestionItems from '../components/QuestionItems'
 import { useNavigate } from 'react-router-dom'
 
 function Survey() {
@@ -16,10 +17,9 @@ function Survey() {
   const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = surveyee.timeRemaining
+  let totalTime = surveyTimer
 
   useEffect(() => {
-
     // run in every second
     let x = setInterval(function() {
 
@@ -29,41 +29,38 @@ function Survey() {
         seconds = seconds < 10 ? '0' + seconds : seconds
 
         totalTime--
-  
+
         setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
-  
+
         // set/update timer
         dispatch(setTimer(totalTime))
 
-        const surveyeeData = { 
-          authCode : surveyee.authCode,
-          timeRemaining : totalTime,
-        }
-    
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
-      } else {
+      }
+
+      if (surveyTimer < 1) {
+
         setTime('0 minutes')
-        
+
         const surveyeeData = { 
           authCode : surveyee.authCode,
-          // timeRemaining : 0,
+          timeRemaining : 0,
           isCompleted : true
         }
-    
+
         // update surveyee
         dispatch(updateSurveyee(surveyeeData))
-        
+
         // end timer
-        // dispatch(endTimer())
-        // setModalShow(true)
+        dispatch(endTimer())
+        setModalShow(true)
 
         // break loop
         clearInterval(x)
       }
     }, 1000)
+  }, [dispatch, setTime, setModalShow, clearInterval, totalTime])
 
-  }, [dispatch, surveyTimer, surveyee.authCode, surveyee.timeRemaining, totalTime])
+  
 
   return (
     <>
@@ -71,6 +68,8 @@ function Survey() {
         <Alert.Heading>Survey</Alert.Heading>
         <div className="d-flex justify-content-end">You have: {time}</div>
       </Alert>
+
+      <QuestionItems />
 
       <ModalOnEndSurvey 
         show = {modalShow}
@@ -84,7 +83,7 @@ function Survey() {
           }
         }
       />
-      
+
     </>
   )
 }

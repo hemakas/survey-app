@@ -12,8 +12,6 @@ function InstructionsList() {
 
   const { surveyee, isError, isSuccess, message } = useSelector((state) => state.surveyee)
   
-  console.log('hehehe  ' + surveyee.timeRemaining)
-  
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -26,8 +24,6 @@ function InstructionsList() {
     }
 
     dispatch(resetSurveyee())
-
-    dispatch(resetTimer())
 
   }, [surveyee, isError, isSuccess, message, navigate, dispatch])
 

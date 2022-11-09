@@ -60,7 +60,7 @@ function Responses() {
             </thead>
             <tbody>
               {surveyees.map((surveyee, index) => (
-                <SurveyeeItem key={index} surveyee={surveyee} />
+                <SurveyeeItem key={index} index={index} surveyee={surveyee} />
               ))}
             </tbody>
           </Table>

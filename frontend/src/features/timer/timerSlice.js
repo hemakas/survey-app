@@ -5,11 +5,7 @@ import timerService from './timerService'
 const surveyTimer = localStorage.getItem('surveyTimer')
 
 const initialState = {
-    surveyTimer: surveyTimer ? surveyTimer : 0,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: '',
+    surveyTimer: surveyTimer ? surveyTimer : 0
 }
 
 // set time
@@ -27,25 +23,10 @@ export const timerSlice = createSlice({
     initialState,
     reducers: {
         resetTimer: (state) => {
-            state.isLoading = false
-            state.isSuccess = false
-            state.isError = false
-            state.message = ''
+            state.surveyTimer = 0
         },
     },
     extraReducers: (builder) => {
-
-        builder
-
-        // set timer case
-        .addCase(setTimer.fulfilled, (state, action) => {
-            state.surveyTimer = action.payload
-        })
-
-        // end timer case
-        .addCase(endTimer.fulfilled, (state) => {
-            state.surveyTimer = 0
-        })
     },
   })
 

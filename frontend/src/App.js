@@ -14,6 +14,7 @@ import Responses from './pages/Responses'
 import Register from './pages/Register'
 import Instructions from './pages/Instructions'
 import Survey from './pages/Survey'
+import ThankYou from './pages/ThankYou'
 
 // toastify
 import { ToastContainer } from 'react-toastify'
@@ -37,6 +38,7 @@ function App() {
             <Route path='/Register/:authCode' element={<Register />} />
             <Route path='/Instructions' element={<Instructions />} />
             <Route path='/Survey' element={<Survey />} />
+            <Route path='/ThankYou' element={<ThankYou />} />
           </Routes>
         </div>
       </Router>

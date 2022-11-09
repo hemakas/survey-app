@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { logoutSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
 import { endTimer, resetTimer } from '../features/timer/timerSlice'
+import { setConfirm } from '../features/modal/modalSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -22,12 +23,13 @@ export const Header = () => {
 
     // surveyee logout
     const onLogout2 = () => {   
-        dispatch(resetTimer())
+        // dispatch(resetTimer())
         dispatch(endTimer())
         dispatch(resetSurveyee())
         dispatch(logoutSurveyee())
         dispatch(reset())
         navigate('/')
+        // dispatch(setConfirm())
     }
 
     return (
