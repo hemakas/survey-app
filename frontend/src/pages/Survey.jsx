@@ -41,24 +41,28 @@ function Survey() {
 
         setTime('0 minutes')
 
-        const surveyeeData = { 
-          authCode : surveyee.authCode,
-          timeRemaining : 0,
-          isCompleted : true
+        if (surveyee.authCode != null) {
+          const surveyeeData = { 
+            authCode : surveyee.authCode,
+            // timeRemaining : 0,
+            isCompleted : true
+          }
+  
+          // update surveyee
+          dispatch(updateSurveyee(surveyeeData))
+        } else {
+          console.log('null auth code  ' + surveyee.authCode)
         }
 
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
-
         // end timer
-        dispatch(endTimer())
+        // dispatch(endTimer())
         setModalShow(true)
 
         // break loop
         clearInterval(x)
       }
     }, 1000)
-  }, [dispatch, setTime, setModalShow, clearInterval, totalTime])
+  }, [surveyee.authCode, dispatch, setTime, setModalShow, clearInterval, totalTime])
 
   
 
@@ -77,7 +81,6 @@ function Survey() {
             () => {
             setModalShow(false)
             dispatch(endTimer())
-            dispatch(resetSurveyee())
             dispatch(logoutSurveyee())
             navigate('/')
           }

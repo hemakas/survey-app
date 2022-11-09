@@ -7,7 +7,6 @@ import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surve
 import { endTimer } from '../features/timer/timerSlice'
 import ModalOnSubmitSurvey from './modals/ModalOnSubmitSurvey'
 
-
 function QuestionItems() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -24,22 +23,22 @@ function QuestionItems() {
         if (isError) {
           toast.error(message)
         }
-    
-        if (isSuccess) {
-          navigate('/')
-        }
 
         if (confrimSubmit) {
-            // const surveyeeData = { 
-            //     authCode : surveyee.authCode,
-            //     timeRemaining : 0,
-            //     isCompleted : true,
-            //     answers : [question1, question2]
-            // }
-          
-            // // update surveyee
-            // dispatch(updateSurveyee(surveyeeData))
-    
+            if (surveyee.authCode != null) {
+                const surveyeeData = { 
+                    authCode : surveyee.authCode,
+                    timeRemaining : 0,
+                    isCompleted : true,
+                    answers : [question1, question2]
+                }
+              
+                // update surveyee
+                dispatch(updateSurveyee(surveyeeData))
+            } else {
+                console.log('null auth code  ' + surveyee.authCode)
+            }
+            
             dispatch(endTimer())
             dispatch(resetSurveyee())
             dispatch(logoutSurveyee())
@@ -49,7 +48,7 @@ function QuestionItems() {
     
         dispatch(resetSurveyee())
     
-    }, [surveyee, isError, isSuccess, message, navigate, dispatch, confrimSubmit, question1, question2])
+    }, [surveyee.authCode, isError, isSuccess, message, navigate, dispatch, confrimSubmit, question1, question2])
 
     const onChange = (e) => {
         setFormData((prevState) => ({

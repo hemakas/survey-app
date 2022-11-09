@@ -26,10 +26,6 @@ function Responses() {
 
     dispatch(getSurveyees())
 
-    return () => {
-      dispatch(resetSurveyee())
-    }
-
   }, [user, navigate, isError, message, dispatch])
 
   if (isLoading) {
