@@ -17,13 +17,13 @@ function LoginFormSurveyee() {
       toast.error(message)
     }
 
-    if (isSuccess && authCode != '') {
+    if (isSuccess && authCode !== '') {
       // toast.success("Logged in successfully")
       navigate('/Register')
     }
     
     dispatch(resetSurveyee())
-  }, [surveyee, isError, isSuccess, message, navigate, dispatch])
+  }, [surveyee, isError, isSuccess, message, navigate, dispatch, authCode])
 
   // set auth code 
   const handleSetAuthCode = (e) => {
@@ -53,7 +53,7 @@ function LoginFormSurveyee() {
           <Row className="mb-3">
             <Form.Group>
               <Form.Label>Paste the auth code here</Form.Label>
-              <Form.Control type="text" name="authCode" id="authCode" value={authCode} onChange={handleSetAuthCode} required placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"/>
+              <Form.Control type="text" name="authCode" id="authCode" value={authCode} onChange={handleSetAuthCode} required/>
             </Form.Group>
           </Row>
 

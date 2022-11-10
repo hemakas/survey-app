@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Alert, Container, Table } from 'react-bootstrap'
-import { getSurveyees, resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { getSurveyees } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from '../components/ReactSpinner'
 import SurveyeeItem from '../components/SurveyeeItem'
 
@@ -61,7 +61,7 @@ function Responses() {
             </tbody>
           </Table>
         ) : (
-          <h5>You have not set any surveyees</h5>
+          <h5>You currently have no surveyees</h5>
         )}
       </Container>      
     </>

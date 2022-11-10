@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Form } from 'react-bootstrap'
 import { updateSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
-import { setTimer, resetTimer } from '../features/timer/timerSlice'
+import { setTimer } from '../features/timer/timerSlice'
 
 function InstructionsList() {
   const navigate = useNavigate()

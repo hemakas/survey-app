@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Alert, Form } from 'react-bootstrap'
-import { setTimer, countDownTimer, resetTimer } from '../features/timer/timerSlice'
+import { Alert } from 'react-bootstrap'
+import { setTimer, endTimer } from '../features/timer/timerSlice'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/modals/ModalOnEndSurvey'
 import QuestionItems from '../components/QuestionItems'
 import { useNavigate } from 'react-router-dom'
-import { CountDownTimer } from '../features/timer/timerSlice'
 
 function Survey() {
   const dispatch = useDispatch()
@@ -36,34 +35,35 @@ function Survey() {
         // set/update timer
         dispatch(setTimer(totalTime))
 
-      }
+      } else {
+        if (totalTime === 0) {
 
-      if (surveyTimer < 1) {
-
-        setTime('0 minutes')
-
-        if (surveyee.authCode != null) {
-          const surveyeeData = { 
-            authCode : surveyee.authCode,
-            // timeRemaining : 0,
-            isCompleted : true
+          setTime('0 minutes')
+  
+          if (surveyee.authCode != null) {
+            const surveyeeData = { 
+              authCode : surveyee.authCode,
+              // timeRemaining : 0,
+              isCompleted : true
+            }
+    
+            // update surveyee
+            dispatch(updateSurveyee(surveyeeData))
+          } else {
+            console.log('null auth code  ' + surveyee.authCode)
           }
   
-          // update surveyee
-          dispatch(updateSurveyee(surveyeeData))
-        } else {
-          console.log('null auth code  ' + surveyee.authCode)
+          // end timer
+          dispatch(endTimer())
+          // setModalShow(true)
+  
+          // break loop
+          clearInterval(x)
         }
-
-        // end timer
-        // dispatch(endTimer())
-        setModalShow(true)
-
-        // break loop
-        clearInterval(x)
       }
+
     }, 1000)
-  }, [surveyee.authCode, dispatch, setTime, setModalShow, clearInterval, totalTime])
+  }, [surveyee.authCode, dispatch, setTime, setModalShow, totalTime])
 
   
 
@@ -71,7 +71,6 @@ function Survey() {
     <>
       <Alert variant="success">
         <Alert.Heading>Survey</Alert.Heading>
-        <CountDownTimer targetDate={dateTimeAfterThreeDays} />
       </Alert>
 
       <QuestionItems />
@@ -81,9 +80,8 @@ function Survey() {
         onHide = {
             () => {
             setModalShow(false)
-            dispatch(endTimer())
-            dispatch(logoutSurveyee())
-            navigate('/')
+            // dispatch(logoutSurveyee())
+            // navigate('/')
           }
         }
       />
