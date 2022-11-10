@@ -19,12 +19,13 @@ export const timerSlice = createSlice({
     initialState: {
         surveyTimer: surveyTimer ? surveyTimer : 0
     },
-    reducers: {
+    reducers: {      
         resetTimer: (state) => {
             state.surveyTimer = 0
         },
     },
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+    },
   })
 
 export const { resetTimer } = timerSlice.actions

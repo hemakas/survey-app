@@ -1,7 +1,7 @@
 
 // start timer
 const setTimer = (time) => {
-  localStorage.setItem('surveyTimer', time)
+  localStorage.setItem('surveyTimer', JSON.stringify(time))
 }
 
 // end timer

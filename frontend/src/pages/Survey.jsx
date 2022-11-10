@@ -1,23 +1,26 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Alert } from 'react-bootstrap'
-import { setTimer, endTimer } from '../features/timer/timerSlice'
+import { setTimer, endTimer, resetTimer } from '../features/timer/timerSlice'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/modals/ModalOnEndSurvey'
 import QuestionItems from '../components/QuestionItems'
 import { useNavigate } from 'react-router-dom'
 
+const timeFromLocalStorage = JSON.parse(localStorage.getItem('surveyTimer') || 1800)
+
 function Survey() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [time, setTime] = useState('')
+  const [time, setTime] = useState(timeFromLocalStorage)
   const [modalShow, setModalShow] = useState(false)
 
   const { surveyee } = useSelector((state) => state.surveyee)
-  const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = surveyTimer
+  let totalTime = timeFromLocalStorage
+
+  console.log(timeFromLocalStorage)
 
   useEffect(() => {
     // run in every second
@@ -35,34 +38,33 @@ function Survey() {
         // set/update timer
         dispatch(setTimer(totalTime))
 
-      } else {
-        if (totalTime === 0) {
+        localStorage.setItem('surveyTimer', JSON.stringify(totalTime))
 
-          setTime('0 minutes')
-  
-          if (surveyee.authCode != null) {
-            const surveyeeData = { 
-              authCode : surveyee.authCode,
-              // timeRemaining : 0,
-              isCompleted : true
-            }
-    
-            // update surveyee
-            dispatch(updateSurveyee(surveyeeData))
-          } else {
-            console.log('null auth code  ' + surveyee.authCode)
-          }
-  
-          // end timer
-          dispatch(endTimer())
-          // setModalShow(true)
-  
-          // break loop
-          clearInterval(x)
+      } 
+      
+      if (totalTime === 0) {
+
+        setTime('0 minutes')
+
+        const surveyeeData = { 
+          authCode : surveyee.authCode,
+          // timeRemaining : totalTime,
+          isCompleted : true
         }
+
+        // update surveyee
+        dispatch(updateSurveyee(surveyeeData))
+
+        // end timer
+        dispatch(endTimer())
+        setModalShow(true)
+
+        // break loop
+        clearInterval(x)
       }
 
-    }, 1000)
+    }, 1000)   
+
   }, [surveyee.authCode, dispatch, setTime, setModalShow, totalTime])
 
   
@@ -71,6 +73,7 @@ function Survey() {
     <>
       <Alert variant="success">
         <Alert.Heading>Survey</Alert.Heading>
+        <div className="d-flex justify-content-end">You have: {time}</div>
       </Alert>
 
       <QuestionItems />
@@ -80,8 +83,9 @@ function Survey() {
         onHide = {
             () => {
             setModalShow(false)
-            // dispatch(logoutSurveyee())
-            // navigate('/')
+            // dispatch(resetTimer())
+            dispatch(logoutSurveyee())
+            navigate('/')
           }
         }
       />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
 import InstructionsList from '../components/InstructionsList'

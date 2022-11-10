@@ -25,19 +25,15 @@ function QuestionItems() {
         }
 
         if (confrimSubmit) {
-            if (surveyee.authCode != null) {
-                const surveyeeData = { 
-                    authCode : surveyee.authCode,
-                    timeRemaining : 0,
-                    isCompleted : true,
-                    answers : [question1, question2]
-                }
-              
-                // update surveyee
-                dispatch(updateSurveyee(surveyeeData))
-            } else {
-                console.log('null auth code  ' + surveyee.authCode)
+            const surveyeeData = { 
+                authCode : surveyee.authCode,
+                timeRemaining : 0,
+                isCompleted : true,
+                answers : [question1, question2]
             }
+          
+            // update surveyee
+            dispatch(updateSurveyee(surveyeeData))
             
             dispatch(endTimer())
             dispatch(resetSurveyee())

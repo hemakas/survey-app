@@ -3,9 +3,8 @@ import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { logoutSurveyee, resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { logoutSurveyee, resetSurveyee, updateSurveyee } from '../features/surveyee/surveyeeSlice'
 import { endTimer, resetTimer } from '../features/timer/timerSlice'
-import { setConfirm } from '../features/modal/modalSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -22,14 +21,24 @@ export const Header = () => {
     }
 
     // surveyee logout
-    const onLogout2 = () => {   
-        // dispatch(resetTimer())
+    const onLogout2 = () => {
+
+        console.log('this is the rem.tim. =   ' + JSON.parse(localStorage.getItem('surveyTimer')))
+        
+        const surveyeeData = { 
+            authCode : surveyee.authCode,
+            timeRemaining : JSON.parse(localStorage.getItem('surveyTimer'))
+        }
+
+        // update surveyee
+        dispatch(updateSurveyee(surveyeeData))
+
         dispatch(endTimer())
+        dispatch(resetTimer())
         dispatch(resetSurveyee())
         dispatch(logoutSurveyee())
         dispatch(reset())
         navigate('/')
-        // dispatch(setConfirm())
     }
 
     return (
