@@ -11,9 +11,6 @@ function InstructionsList() {
   const dispatch = useDispatch()
 
   const { surveyee, isError, isSuccess, message } = useSelector((state) => state.surveyee)
-  const { surveyTimer } = useSelector((state) => state.timer)
-
-  // console.log('surveyee remaining time  ' + surveyee.timeRemaining)
   
   useEffect(() => {
     if (isError) {

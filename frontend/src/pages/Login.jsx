@@ -1,9 +1,27 @@
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
 import LoginFormSurveyee from '../components/LoginFormSurveyee'
+import { resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { endTimer } from '../features/timer/timerSlice'
 
 function Login() {
-  // window.location.reload(false)
+  const dispatch = useDispatch()
+  const { surveyee } = useSelector((state) => state.surveyee)
+  const { surveyTimer } = useSelector((state) => state.timer)
+  
+  useEffect(() => {
+
+    if(surveyee != null) {
+      dispatch(resetSurveyee())
+    }
+
+    if(surveyTimer != null) {
+      dispatch(endTimer())
+    }
+    
+  }, [surveyee, surveyTimer, dispatch])
 
   return (
     <>

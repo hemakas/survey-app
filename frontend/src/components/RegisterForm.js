@@ -74,22 +74,22 @@ function RegisterForm() {
       <Form>
         {/* first name */}
         <FloatingLabel label="First Name" className='mb-3'>
-          <Form.Control type="text" name="firstName" id="firstName" vaue={firstName} onChange={onChange} required placeholder="John"/>
+          <Form.Control type="text" name="firstName" id="firstName" value={firstName} onChange={onChange} required placeholder="John"/>
         </FloatingLabel>
 
         {/* last name */}
         <FloatingLabel label="Last Name" className='mb-3'>
-          <Form.Control type="text" name="lastName" id="lastName" vaue={lastName} onChange={onChange} required placeholder="Doe"/>
+          <Form.Control type="text" name="lastName" id="lastName" value={lastName} onChange={onChange} required placeholder="Doe"/>
         </FloatingLabel>
 
         {/* email */}
         <FloatingLabel label="Email" className='mb-3'>
-          <Form.Control type="email" name="email" id="email" vaue={email} onChange={onChange} required placeholder="john@example.com"/>
+          <Form.Control type="email" name="email" id="email" value={email} onChange={onChange} required placeholder="john@example.com"/>
         </FloatingLabel>
 
         {/* phone */}
         <FloatingLabel label="Phone" className='mb-3'>
-          <Form.Control type="text" name="phone" id="phone" vaue={phone} onChange={onChange} required placeholder="Your 10 digit phone number"/>
+          <Form.Control type="text" name="phone" id="phone" value={phone} onChange={onChange} required placeholder="Your 10 digit phone number"/>
         </FloatingLabel>
 
         {/* submit button */}

@@ -1,26 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import timerService from './timerService'
+
+// get timer from localStorage
+const surveyTimer = localStorage.getItem('surveyTimer')
+
+// set time
+export const setTimer = createAsyncThunk('timer/set', async (time) => {
+    timerService.setTimer(time)
+})
+
+// end timer on end survey
+export const endTimer = createAsyncThunk('timer/end', async () => {
+    timerService.endTimer()
+})
 
 export const timerSlice = createSlice({
     name: 'timer',
     initialState: {
-        surveyTimer: 0
+        surveyTimer: surveyTimer ? surveyTimer : 0
     },
     reducers: {
-        setTimer: (state, action) => {
-            state.surveyTimer = action.payload  
-        },
-
-        countDownTimer: (state) => {
-            state.surveyTimer -= 1
-        },
-
         resetTimer: (state) => {
             state.surveyTimer = 0
-        }
-
+        },
     },
     extraReducers: (builder) => {},
   })
 
-export const { setTimer, countDownTimer, resetTimer } = timerSlice.actions
+export const { resetTimer } = timerSlice.actions
 export default timerSlice.reducer
