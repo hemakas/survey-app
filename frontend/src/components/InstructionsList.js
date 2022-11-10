@@ -6,8 +6,6 @@ import { Button, Form } from 'react-bootstrap'
 import { updateSurveyee } from '../features/surveyee/surveyeeSlice'
 // import { setTimer } from '../features/timer/timerSlice'
 
-const timeFromLocalStorage = JSON.parse(localStorage.getItem('surveyTimer') || 0)
-
 function InstructionsList() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
