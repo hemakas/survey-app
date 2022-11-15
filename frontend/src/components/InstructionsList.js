@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Form } from 'react-bootstrap'
 import { updateSurveyee } from '../features/surveyee/surveyeeSlice'
-// import { setTimer } from '../features/timer/timerSlice'
+import { setTimer } from '../features/timer/timerSlice'
 
 function InstructionsList() {
   const navigate = useNavigate()
@@ -19,7 +19,6 @@ function InstructionsList() {
 
     if (isSuccess) {
       const minutes = Math.floor(surveyee.timeRemaining / 60)
-      localStorage.setItem('surveyTimer', JSON.stringify(minutes))
       toast.success(`You have ${minutes} minutes left to answer the questions`)
       navigate('/Survey')
     }
@@ -30,7 +29,7 @@ function InstructionsList() {
   const handleEntry = (e) => {
     e.preventDefault()
 
-    // dispatch(setTimer(surveyee.timeRemaining))
+    dispatch(setTimer(surveyee.timeRemaining))
 
     const surveyeeData = { 
       authCode : surveyee.authCode,

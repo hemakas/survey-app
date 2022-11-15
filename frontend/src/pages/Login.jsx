@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Alert, Col, Row, Container, Card } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
 import LoginFormSurveyee from '../components/LoginFormSurveyee'
 import { resetSurveyee } from '../features/surveyee/surveyeeSlice'
-import { endTimer } from '../features/timer/timerSlice'
+import { resetTimer } from '../features/timer/timerSlice'
 
 function Login() {
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ function Login() {
     }
 
     if(surveyTimer != null) {
-      dispatch(endTimer())
+      dispatch(resetTimer())
     }
     
   }, [surveyee, surveyTimer, dispatch])

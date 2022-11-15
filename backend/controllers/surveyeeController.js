@@ -95,7 +95,7 @@ const deletesurveyee = asyncHandler(async (req, res) => {
 
     const result = await surveyee.remove()
 
-    res.status(200).json({ message: `Surveyee with auth code '${result.authCode}' deleted successfully` })
+    res.status(200).json({ id: req.params.id })
 
 })
 

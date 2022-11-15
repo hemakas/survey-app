@@ -1,8 +1,10 @@
-import { FaTrash } from 'react-icons/fa'
+import { FaTrash, FaEdit } from 'react-icons/fa'
 import { deleteSurveyee } from '../features/surveyee/surveyeeSlice'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { Link } from "react-router-dom";
 
-function SurveyeeItem({ surveyee, index }) {
+function SurveyeeItem({ surveyee = {}, index }) {
     const dispatch = useDispatch()
     let txt = ""
 
@@ -15,7 +17,12 @@ function SurveyeeItem({ surveyee, index }) {
             }
             surveyee.answers.forEach(myFunction);
         }
-    }    
+    } 
+    
+    const onDeleteSurveyee = () => {
+        dispatch(deleteSurveyee(surveyee?._id))
+        toast.success("Surveyee deleted succefully")
+    }
     
     return (
         <tr>
@@ -26,9 +33,17 @@ function SurveyeeItem({ surveyee, index }) {
             <td>{surveyee.phone}</td>
             <td>{txt}</td>
             <td>{Math.floor(surveyee.timeRemaining / 60 )} Mins</td>
-            <td>{surveyee.isCompleted == true ? 'Yes' : 'No'}</td>
+            <td>{surveyee.isCompleted === true ? 'Yes' : 'No'}</td>
             <td>
-                <button onClick={() => dispatch(deleteSurveyee(surveyee._id))}><FaTrash /></button>
+                {/* <button onClick={() => dispatch(deleteSurveyee(surveyee._id))}><FaTrash /></button> */}
+                
+                {/* edit button */}
+                <Link to={`/Responses/Update/${surveyee.authCode}`}>
+                    <button><FaEdit /></button>
+                </Link>
+                
+                {/* delete button */}
+                <button onClick={onDeleteSurveyee}><FaTrash /></button>
             </td>
         </tr>
     )

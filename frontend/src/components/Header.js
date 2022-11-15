@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { logoutSurveyee, resetSurveyee, updateSurveyee } from '../features/surveyee/surveyeeSlice'
-import { endTimer, resetTimer } from '../features/timer/timerSlice'
+import { resetTimer } from '../features/timer/timerSlice'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -32,8 +32,7 @@ export const Header = () => {
 
         // update surveyee
         dispatch(updateSurveyee(surveyeeData))
-
-        dispatch(endTimer())
+        
         dispatch(resetTimer())
         dispatch(resetSurveyee())
         dispatch(logoutSurveyee())

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Form, Button } from 'react-bootstrap'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
-import { endTimer } from '../features/timer/timerSlice'
+import { resetTimer } from '../features/timer/timerSlice'
 import ModalOnSubmitSurvey from './modals/ModalOnSubmitSurvey'
 
 function QuestionItems() {
@@ -35,7 +35,7 @@ function QuestionItems() {
             // update surveyee
             dispatch(updateSurveyee(surveyeeData))
             
-            dispatch(endTimer())
+            dispatch(resetTimer())
             dispatch(resetSurveyee())
             dispatch(logoutSurveyee())
             navigate('/ThankYou')

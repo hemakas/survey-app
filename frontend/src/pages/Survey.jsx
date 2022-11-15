@@ -1,73 +1,66 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Alert } from 'react-bootstrap'
-import { setTimer, endTimer, resetTimer } from '../features/timer/timerSlice'
+import { setTimer, resetTimer } from '../features/timer/timerSlice'
 import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/modals/ModalOnEndSurvey'
 import QuestionItems from '../components/QuestionItems'
 import { useNavigate } from 'react-router-dom'
 
-const timeFromLocalStorage = JSON.parse(localStorage.getItem('surveyTimer') || 1800)
-
 function Survey() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [time, setTime] = useState(timeFromLocalStorage)
+  const [time, setTime] = useState('')
   const [modalShow, setModalShow] = useState(false)
 
   const { surveyee } = useSelector((state) => state.surveyee)
+  const { surveyTimer } = useSelector((state) => state.timer)
 
-  let totalTime = timeFromLocalStorage
-
-  console.log(timeFromLocalStorage)
+  let totalTime = surveyTimer
 
   useEffect(() => {
     // run in every second
-    let x = setInterval(function() {
+    // let x = setInterval(function() {
 
-      if (totalTime > 0) {
-        const minutes = Math.floor(totalTime / 60)
-        let seconds = totalTime % 60
-        seconds = seconds < 10 ? '0' + seconds : seconds
+    //   if (totalTime > 0) {
+    //     const minutes = Math.floor(totalTime / 60)
+    //     let seconds = totalTime % 60
+    //     seconds = seconds < 10 ? '0' + seconds : seconds
 
-        totalTime--
+    //     totalTime--
 
-        setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
+    //     setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
 
-        // set/update timer
-        dispatch(setTimer(totalTime))
+    //     // set/update timer
+    //     dispatch(setTimer(totalTime))
 
-        localStorage.setItem('surveyTimer', JSON.stringify(totalTime))
-
-      } 
+    //   } 
       
-      if (totalTime === 0) {
+    //   if (totalTime === 0) {
 
-        setTime('0 minutes')
+    //     setTime('0 minutes')
 
-        const surveyeeData = { 
-          authCode : surveyee.authCode,
-          // timeRemaining : totalTime,
-          isCompleted : true
-        }
+    //     const surveyeeData = { 
+    //       authCode : surveyee.authCode,
+    //       timeRemaining : totalTime,
+    //       isCompleted : true
+    //     }
 
-        // update surveyee
-        dispatch(updateSurveyee(surveyeeData))
+    //     // update surveyee
+    //     dispatch(updateSurveyee(surveyeeData))
 
-        // end timer
-        dispatch(endTimer())
-        setModalShow(true)
+    //     // end timer
+    //     dispatch(resetTimer())
+    //     setModalShow(true)
 
-        // break loop
-        clearInterval(x)
-      }
+    //     // break loop
+    //     clearInterval(x)
+    //   }
 
-    }, 1000)   
+    // }, 1000)   
 
   }, [surveyee.authCode, dispatch, setTime, setModalShow, totalTime])
-
-  
 
   return (
     <>
@@ -83,7 +76,6 @@ function Survey() {
         onHide = {
             () => {
             setModalShow(false)
-            // dispatch(resetTimer())
             dispatch(logoutSurveyee())
             navigate('/')
           }

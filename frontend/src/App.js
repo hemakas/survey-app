@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Login from './pages/Login'
 import Generate from './pages/Generate'
 import Responses from './pages/Responses'
+import UpdateSurveyee from './pages/UpdateSurveyee'
 
 // surveyee pages
 import Register from './pages/Register'
@@ -32,6 +33,7 @@ function App() {
             <Route path='/' element={<Login />} />
             <Route path='/Generate' element={<Generate />} />
             <Route path='/Responses' element={<Responses />} />
+            <Route path='/Responses/Update/:authCode' element={<UpdateSurveyee />} />
 
             {/* surveyee routes */}
             <Route path='/Register' element={<Register />} />
