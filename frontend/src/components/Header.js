@@ -17,6 +17,7 @@ export const Header = () => {
         dispatch(logout())
         dispatch(reset())
         dispatch(resetSurveyee())
+        dispatch(logoutSurveyee())
         navigate('/')
     }
 

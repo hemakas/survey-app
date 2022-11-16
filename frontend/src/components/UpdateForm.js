@@ -4,45 +4,31 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import ReactSpinner from './ReactSpinner'
-import { updateSurveyee, resetSurveyee, getSurveyeeByAuthCode } from '../features/surveyee/surveyeeSlice'
+import { updateSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 
-function UpdateForm() {
+function UpdateForm({ surveyee }) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { authCode } = useParams()
-  const { surveyee, isLoading, isError, isSuccess, message } = useSelector((state) => state.surveyee)
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: ''
-  })
+  const [firstName, setFirstName] = useState(  surveyee.name ? (surveyee.name.split(' ')[0]) : '' )
+  const [lastName, setLastName] = useState( surveyee.name ? (surveyee.name.split(' ')[1]) : '' )
+  const [email, setEmail] = useState(surveyee.email ? surveyee.email : '')
+  const [phone, setPhone] = useState(surveyee.phone ? surveyee.phone : '')
 
-  const { firstName, lastName, email, phone } = formData
+  const { isLoading, isError, message } = useSelector((state) => state.surveyee)
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
-
-    dispatch(getSurveyeeByAuthCode({ authCode }))
-
-    setFormData({ 
-      firstName: surveyee.email,
-      lastName: surveyee.email,
-      email: surveyee.email,
-      phone: surveyee.phone
-    })
     
-  }, [authCode, surveyee, isError, isSuccess, message, navigate, dispatch])
+  }, [isError, message])
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
+  // setting values
+  const onFirstNameChange = e => setFirstName(e.target.value)
+  const onLastNameChange = e => setLastName(e.target.value)
+  const onEmailChange = e => setEmail(e.target.value)
+  const onPhoneChange = e => setPhone(e.target.value)
 
   // form submit
   const handleSubmit = (e) => {
@@ -63,6 +49,12 @@ function UpdateForm() {
 
       // update surveyee
       dispatch(updateSurveyee(surveyeeData))
+
+      // get the surveyee info out of state.surveyee
+      dispatch(logoutSurveyee())
+
+      toast.success('Surveyee updated!')
+      navigate('/Responses')
     }
   }
 
@@ -76,27 +68,27 @@ function UpdateForm() {
       <Form>
         {/* first name */}
         <FloatingLabel label="First Name" className='mb-3'>
-          <Form.Control type="text" name="firstName" id="firstName" value={firstName} onChange={onChange} required placeholder="John"/>
+          <Form.Control type="text" name="firstName" id="firstName" value={firstName} onChange={onFirstNameChange} required placeholder="John"/>
         </FloatingLabel>
 
         {/* last name */}
         <FloatingLabel label="Last Name" className='mb-3'>
-          <Form.Control type="text" name="lastName" id="lastName" value={lastName} onChange={onChange} required placeholder="Doe"/>
+          <Form.Control type="text" name="lastName" id="lastName" value={lastName} onChange={onLastNameChange} required placeholder="Doe"/>
         </FloatingLabel>
 
         {/* email */}
         <FloatingLabel label="Email" className='mb-3'>
-          <Form.Control type="email" name="email" id="email" value={email} onChange={onChange} required placeholder="john@example.com"/>
+          <Form.Control type="email" name="email" id="email" value={email} onChange={onEmailChange} required placeholder="john@example.com"/>
         </FloatingLabel>
 
         {/* phone */}
         <FloatingLabel label="Phone" className='mb-3'>
-          <Form.Control type="text" name="phone" id="phone" value={phone} onChange={onChange} required placeholder="Your 10 digit phone number"/>
+          <Form.Control type="text" name="phone" id="phone" value={phone} onChange={onPhoneChange} required placeholder="Your 10 digit phone number"/>
         </FloatingLabel>
 
         {/* submit button */}
         <Form.Group>
-          <Button type='submit' onClick={handleSubmit} variant='primary'>Register</Button>
+          <Button type='submit' onClick={handleSubmit} variant='primary'>Update</Button>
         </Form.Group>
       </Form>
     </>

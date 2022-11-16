@@ -47,6 +47,7 @@ const authorizeSurveyee = asyncHandler(async (req, res) => {
             _id: surveyee.id,
             name: surveyee.name,
             email: surveyee.email,
+            phone: surveyee.phone,
             authCode: surveyee.authCode,
             answers: surveyee.answers,
             startedOn: surveyee.startedOn,

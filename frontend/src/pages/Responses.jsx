@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Alert, Container, Table } from 'react-bootstrap'
-import { getSurveyees } from '../features/surveyee/surveyeeSlice'
+import { getSurveyees, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ReactSpinner from '../components/ReactSpinner'
 import SurveyeeItem from '../components/SurveyeeItem'
 
@@ -25,6 +25,9 @@ function Responses() {
     }
 
     dispatch(getSurveyees())
+
+    // get the surveyee info out of state.surveyee
+    dispatch(logoutSurveyee())
 
   }, [user, navigate, isError, message, dispatch])
 
