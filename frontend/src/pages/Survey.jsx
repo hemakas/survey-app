@@ -1,72 +1,45 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Alert } from 'react-bootstrap'
-import { setTimer, resetTimer } from '../features/timer/timerSlice'
-import { updateSurveyee, resetSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
+import { resetTimer } from '../features/timer/timerSlice'
+import { updateSurveyee, logoutSurveyee } from '../features/surveyee/surveyeeSlice'
 import ModalOnEndSurvey from '../components/modals/ModalOnEndSurvey'
 import QuestionItems from '../components/QuestionItems'
 import { useNavigate } from 'react-router-dom'
+import NewCountDown from '../components/NewCountDown'
 
 function Survey() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const [time, setTime] = useState('')
   const [modalShow, setModalShow] = useState(false)
-
   const { surveyee } = useSelector((state) => state.surveyee)
   const { surveyTimer } = useSelector((state) => state.timer)
 
   let totalTime = surveyTimer
 
   useEffect(() => {
-    // run in every second
-    // let x = setInterval(function() {
-
-    //   if (totalTime > 0) {
-    //     const minutes = Math.floor(totalTime / 60)
-    //     let seconds = totalTime % 60
-    //     seconds = seconds < 10 ? '0' + seconds : seconds
-
-    //     totalTime--
-
-    //     setTime(minutes + ' minutes & ' + seconds + ' seconds ' )
-
-    //     // set/update timer
-    //     dispatch(setTimer(totalTime))
-
-    //   } 
+    // end timer
+    if (totalTime < 0) {
+      dispatch(resetTimer())
       
-    //   if (totalTime === 0) {
+      const surveyeeData = { 
+        authCode : surveyee.authCode,
+        timeRemaining : surveyTimer,
+        isCompleted: 1
+      }
 
-    //     setTime('0 minutes')
+      // update surveyee
+      dispatch(updateSurveyee(surveyeeData))
 
-    //     const surveyeeData = { 
-    //       authCode : surveyee.authCode,
-    //       timeRemaining : totalTime,
-    //       isCompleted : true
-    //     }
-
-    //     // update surveyee
-    //     dispatch(updateSurveyee(surveyeeData))
-
-    //     // end timer
-    //     dispatch(resetTimer())
-    //     setModalShow(true)
-
-    //     // break loop
-    //     clearInterval(x)
-    //   }
-
-    // }, 1000)   
-
-  }, [surveyee.authCode, dispatch, setTime, setModalShow, totalTime])
+      setModalShow(true)
+    }
+  }, [dispatch, totalTime, surveyTimer, surveyee.authCode])
 
   return (
     <>
       <Alert variant="success">
         <Alert.Heading>Survey</Alert.Heading>
-        <div className="d-flex justify-content-end">You have: {time}</div>
+        <div className="d-flex justify-content-end">You have:{<NewCountDown countDownTime={totalTime} />}</div>
       </Alert>
 
       <QuestionItems />

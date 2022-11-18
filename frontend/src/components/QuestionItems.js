@@ -28,7 +28,7 @@ function QuestionItems() {
             const surveyeeData = { 
                 authCode : surveyee.authCode,
                 timeRemaining : 0,
-                isCompleted : true,
+                isCompleted : 1,
                 answers : [question1, question2]
             }
           

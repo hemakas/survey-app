@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Form, Button, Row } from 'react-bootstrap'
 import { getSurveyeeByAuthCode, resetSurveyee } from '../features/surveyee/surveyeeSlice'
+import { setTimer } from '../features/timer/timerSlice'
 import ReactSpinner from './ReactSpinner'
 
 function LoginFormSurveyee() {
@@ -18,7 +19,7 @@ function LoginFormSurveyee() {
     }
 
     if (isSuccess && authCode !== '') {
-      // toast.success("Logged in successfully")
+      dispatch(setTimer(surveyee.timeRemaining))
       navigate('/Register')
     }
     
